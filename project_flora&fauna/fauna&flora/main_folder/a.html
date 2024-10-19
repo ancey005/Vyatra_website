@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>VYATA:DB</title>
+</head>
+<style>
+    td {
+        border: 2px solid;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #b7b7b7;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<body style="align-items: center;background: linear-gradient(300deg, #00bfff, #360033, #0b8793);">
+
+    <header class="p-3 border-bottom1" style="background-color: black;">
+        <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity=”sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T” crossorigin=”anonymous”>
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white"
+                        class="bi bi-luggage-fill me-4" viewBox="0 0 16 16">
+                        <path
+                            d="M2 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V5h.5A1.5 1.5 0 0 1 8 6.5V7H7v-.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5H4v1H2.5v.25a.75.75 0 0 1-1.5 0v-.335A1.5 1.5 0 0 1 0 13.5v-7A1.5 1.5 0 0 1 1.5 5H2zM3 5h2V2H3z" />
+                        <path
+                            d="M2.5 7a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5m10 1v-.5A1.5 1.5 0 0 0 11 6h-1a1.5 1.5 0 0 0-1.5 1.5V8H8v8h5V8zM10 7h1a.5.5 0 0 1 .5.5V8h-2v-.5A.5.5 0 0 1 10 7M5 9.5A1.5 1.5 0 0 1 6.5 8H7v8h-.5A1.5 1.5 0 0 1 5 14.5zm9 6.5V8h.5A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5z" />
+                    </svg>
+                </a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 link-secondary1" style="color: white;">Home</a></li>
+                    <li><a href="./map.html" class="nav-link px-2 link-body-emphasis1" style="color: white;">Travel</a>
+                    </li>
+                    <li><a href="./Final SIH 2/post.html" class="nav-link px-2 link-body-emphasis1"
+                            style="color: white;">Posts</a></li>
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis1" style="color: white;">Products</a></li>
+                </ul>
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div style="align-items: center; padding: 10px;">
+        <div style="text-align: center; color: black;padding: 10px;margin: auto; align-items: center;">
+            <h1 style="font-size: xx-large;font-weight: bolder; color: aliceblue;"> Flora and Fauna </h1>
+            <p style="color: aliceblue;">Enter the name of your destination to know about it's flora & fauna</p>
+            <form id="form">
+                <input class="form-control" id="user-input" placeholder="Enter Destination Here ..." type="text"
+                    style="width: 800px;height: 40px; text-align: center;margin: 20px; border: 2px solid;margin-left: 300px;" /><br>
+                <button style="width: 200px;height: 30px;border-radius: 10px; font-size: medium;">Search</button>
+            </form>
+        </div>
+        <div style="text-align: center;  ">
+            <h3 style="color: aliceblue;">Result:</h3>
+            <table class="center"></table>
+            <script>
+                onload = fetch('data_2/flora.csv').then(res => {
+                    return res.text()
+                }).then(data => {
+                    let result = data.split(/\r?\n|\r/).map
+                        (e => {
+                            return e.split(",")
+                        })
+                    result.forEach(e => {
+                        let m = e.map(e => {
+                            return `<td> ${e} </td>`;
+                        }).join("")
+                        let ce = document.createElement("tr");
+                        ce.innerHTML = m;
+                        document.querySelector("table").appendChild(ce);
+
+                        console.log(m);
+                    })
+                })
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>

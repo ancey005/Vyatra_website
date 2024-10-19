@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Leaderboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Points</th>
+                <th>Trips Booked</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard">
+            <!-- Leaderboard data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchLeaderboard() {
+            const response = await fetch('http://localhost:3000/leaderboard');
+            const data = await response.json();
+
+            const leaderboardTable = document.getElementById('leaderboard');
+            leaderboardTable.innerHTML = '';
+
+            data.forEach((user, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${user.username}</td>
+                    <td>${user.points}</td>
+                    <td>${user.tripsBooked}</td>
+                `;
+                leaderboardTable.appendChild(row);
+            });
+        }
+
+        fetchLeaderboard();
+    </script>
+</body>
+</html>

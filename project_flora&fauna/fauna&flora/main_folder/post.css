@@ -1,0 +1,18 @@
+body{
+  /* background-color: black; */ 
+ 
+  background: linear-gradient(300deg, #00bfff, #360033, #0b8793);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+ 
+}
+
+.bg-body-tertiary1{
+  background: linear-gradient(300deg, #00bfff, #360033, #0b8793);
+   background-size: 180% 180%;
+   animation: gradient-animation 18s ease infinite;
+    
+}
+.color_change{background: linear-gradient(300deg, #00bfff, #360033, #0b8793);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;}

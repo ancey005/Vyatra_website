@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VYATRA</title>
+  <link rel="stylesheet" href="./main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+    }
+    .travelers-section {
+        background-color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .header {
+        background-color: #111010;
+        width: 100%;
+        padding: 14px 17px;
+    }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0px 0px -3px -9px;
+    }
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff;
+        font-size: 31px;
+        font-weight: 400;
+    }
+    .logo-circle {
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+    .brand-name {
+        margin: 0;
+    }
+    .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 53px;
+        margin: 0px -295px 0px 0px;
+        position: relative;
+    }
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s ease;
+    }
+    .nav-link:hover,
+    .nav-link:focus {
+        color: #d9d9d9;
+    }
+    .travel-button {
+        border-radius: 50px;
+        background-color: #d9d9d9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 30px;
+        text-decoration: none;
+        color: #000;
+        transition: background-color 0.3s ease;
+        position: relative;
+        cursor: pointer;
+    }
+    .travel-button:hover,
+    .travel-button:focus {
+        background-color: #c0c0c0;
+    }
+    .travel-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #d9d9d9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 400px;
+    }
+    .dropdown-menu.visible {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+    .dropdown-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    .dropdown-row h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .dropdown-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+    }
+    .search-container {
+        border-radius: 50px;
+        background-color: #d9d9d9;
+        display: flex;
+        align-items: center;
+        padding: 6px 16px;
+        position: relative;
+        overflow: hidden;
+        width: 48px;
+        transition: width 0.3s ease;
+    }
+    .search-container.expanded {
+        width: 250px;
+    }
+    .search-input {
+        border: none;
+        background: transparent;
+        padding: 8px;
+        font-size: 16px;
+        outline: none;
+        width: 0;
+        transition: width 0.3s ease;
+    }
+    .search-container.expanded .search-input {
+        width: 200px;
+    }
+    .search-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        position: absolute;
+        right: 16px;
+    }
+    .search-icon {
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .search-container.expanded .search-icon {
+        opacity: 1;
+    }
+    .user-avatar {
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+    .content-grid {
+        display: flex;
+        gap: 20px;
+    }
+    .image-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+    }
+    .image-row {
+        display: flex;
+        gap: 20px;
+    }
+    .image-wrapper {
+        width: calc(50% - 10px);
+    }
+    .gallery-image {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        object-fit: cover;
+    }
+    .sidebar {
+        border-radius: 35px;
+        background-color: #d9d9d9;
+        width: 300px;
+        height: 838px;
+    }
+    @media (max-width: 991px) {
+        .header-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .content-grid {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            height: 300px;
+        }
+    }
+</style>
+
+  <!--<link rel="stylesheet" href="./online_style.css">-->
+</head>
+<body>
+   <!-- <section class="travelers-section">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-circle" aria-hidden="true"></div>
+                    <h3 class="brand-name">Vyatra</h3>
+                </div>
+                <nav class="nav-container">
+                    <div class="travel-button">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f6c43e4c16bbbaa7ce9ed64fb6517358039457ff5a31c4efcae2be3a7ee3b6a2?placeholderIfAbsent=true&apiKey=62c4755b9fdb44af9476d97028118330" alt="Travel Icon" class="travel-icon">
+                        <span>Travel</span>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-row">
+                                <h4>Current Location:</h4>
+                                <input type="text" class="dropdown-input" placeholder="Enter current location">
+                            </div>
+                            <div class="dropdown-row">
+                                <h4>Destination:</h4>
+                                <input type="text" class="dropdown-input" placeholder="Enter destination">
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Posts</a>
+                    <form class="search-container" role="search">
+                        <label for="search-input" class="visually-hidden">Search</label>
+                        <input type="search" id="search-input" class="search-input">
+                        <button type="submit" class="search-button" aria-label="Submit search">
+                            <img src="camera-icon-1024x832-h0gkd0hw.png" alt="Camera Icon" class="search-icon">
+                        </button>
+                    </form>
+                    <div class="user-avatar" aria-hidden="true"></div>
+                </nav>
+            </div>
+        </header>
+    </section> -->
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const travelButton = document.querySelector('.travel-button');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const searchContainer = document.querySelector('.search-container');
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+
+            travelButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('visible');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!travelButton.contains(e.target)) {
+                    dropdownMenu.classList.remove('visible');
+                }
+            });
+
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchContainer.classList.toggle('expanded');
+                if (searchContainer.classList.contains('expanded')) {
+                    searchInput.focus();
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!searchContainer.contains(e.target)) {
+                    searchContainer.classList.remove('expanded');
+                }
+            });
+        });
+    </script> -->
+
+    <header class="p-3 border-bottom1">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="#" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-luggage-fill me-4" viewBox="0 0 16 16">
+              <path d="M2 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V5h.5A1.5 1.5 0 0 1 8 6.5V7H7v-.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5H4v1H2.5v.25a.75.75 0 0 1-1.5 0v-.335A1.5 1.5 0 0 1 0 13.5v-7A1.5 1.5 0 0 1 1.5 5H2zM3 5h2V2H3z"/>
+              <path d="M2.5 7a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5m10 1v-.5A1.5 1.5 0 0 0 11 6h-1a1.5 1.5 0 0 0-1.5 1.5V8H8v8h5V8zM10 7h1a.5.5 0 0 1 .5.5V8h-2v-.5A.5.5 0 0 1 10 7M5 9.5A1.5 1.5 0 0 1 6.5 8H7v8h-.5A1.5 1.5 0 0 1 5 14.5zm9 6.5V8h.5A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+            </svg>
+          </a>
+    
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 link-secondary1">Home</a></li>
+            <li><a href="./map.html" class="nav-link px-2 link-body-emphasis1">Travel</a></li>
+            <li><a href="./post_file/post.html" class="nav-link px-2 link-body-emphasis1">Posts</a></li>
+            <li><a href="http://localhost:3000/" class="nav-link px-2 link-body-emphasis1">Hotels</a></li>
+          </ul>
+    
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+          </form>
+    
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="./leader_board.html">Leader Board</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div id="myCarousel" class="carousel slide mb-6 " data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button>
+  </div>
+  <div class="carousel-inner" >
+    <div class="carousel-item">
+      <img class="Image" src="./img_1/naturreise-portugal-vale-do-coa-tal-camp-abend-natucate.webp">
+      <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+      <div class="container">
+        <div class="carousel-caption text-start">
+          <h1>Adventure Awaits: Explore Camps and Museums</h1>
+          <p class="opacity-75">Discover unique travel camps nestled in nature's beauty and visit museums that celebrate the rich diversity of plants and animals from around the world.</p>
+          <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="Image" src="./img_1/75047305-3EFB-4A81-8665-42A5C96B968F-1280x640.jpeg" alt="">
+      <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>Discover Nature's Wonders on Your Next Journey
+          </h1>
+          <p>Embark on unforgettable adventures with us, as we guide you through the world's most breathtaking natural landscapes, rich with diverse flora and fauna.</p>
+          <!-- <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> -->
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item active">
+      <img class="Image" src="./img_1/alpe-di-siusi-sunrise-with-sassolungo-or-langkofel-royalty-free-image-1623254127.jpg" alt="">
+      <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+      <div class="container">
+        <div class="carousel-caption text-end">
+          <h1>Journey Through Majestic Mountains and Serene Rivers
+          </h1>
+          <p>Explore the breathtaking landscapes between your starting point and destination, discovering the stunning mountains and tranquil rivers that define your adventure.</p>
+          <!-- <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  
+    <!-- <script src="script.js"></script> -->
+
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row1">
+        <div class="col-lg-4">
+          <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="./img_1/411959520.jpg" alt="Description of image">
+
+          <h2 class="fw-normal1">Camps & Hotels</h2>
+          <p>Explore a range of comfortable campsites and <br>cozy hotels, offering you the ideal base to rest<br> and recharge as you immerse yourself in nature's beauty.</p>
+          <p><a class="btn btn-secondary" href="../camp_file/flora.html">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="./img_1/360_F_113467839_JA7ZqfYTcIFQWAkwMf3mVmhqXr7ZOgEX.jpg" alt="Description of image">
+
+          <h2 class="fw-normal1">Rivers</h2>
+          <p>Follow the serene rivers that wind through your route, offering picturesque views and peaceful moments as you travel from your location to your destination</p>
+          <p><a class="btn btn-secondary" href="../camp_file/flora.html">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          
+          <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="./img_1/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg" alt="Description of image">
+          <h2 class="fw-normal1">Mountains</h2>
+          <p>Discover the towering mountains that shape your journey, offering breathtaking vistas and unforgettable experiences as you travel from your starting point to your destination.</p>
+          <p><a class="btn btn-secondary" href="./plants_animals_file/plants_animals.html">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="./img_1/360_F_931919962_YWGCLDVmqt3wF62r7qWfrc2Y8AD5PDpx.jpg" alt="Description of image">     <h2 class="fw-normal1">Flora & Fauna</h2>
+          <p>Discover the diverse plant life and wildlife that <br>thrive along your journey, revealing the natural beauty and ecological wonders between your location and destination.</p>
+          <p><a class="btn btn-secondary" href="./plants_animals_file/plants_animals.html">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+       
+      </div><!-- /.row -->
+  
+  
+      <!-- START THE FEATURETTES -->
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1">Discover Nature's Wonders<span class="text-body-secondary"></span></h2>
+          <p class="lead">Embark on a journey where nature unveils its most beautiful secrets. Explore majestic mountains, serene rivers, and lush forests teeming with life. Our website is your gateway to the world of flora and fauna, offering you detailed insights into the rich biodiversity of every destination.</p>
+        </div>
+        <div class="col-md-5">
+          <img src="./img_1/istockphoto-1032239930-612x612.jpg" alt="Description of the image" width="500" height="400" class="img-fluid mx-auto">
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1">Experience the Untouched<span class="text-body-secondary"></span></h2>
+          <p class="lead">Travel beyond the ordinary and immerse yourself in the natural beauty of our planet. Discover hidden gems in nature, visit museums dedicated to plants and animals, and find the perfect spots for your next camping trip surrounded by the wilderness.</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img src="./img_1/rear-view-back-young-asian-hiking-man-standing-riseup-hands-with-happy-peak-rocky-mountain-copy-space_1150-57186.avif" alt="Description of the image" width="500" height="400" class="img-fluid mx-auto">
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1">Plan Your Adventure<span class="text-body-secondary"></span></h2>
+          <p class="lead">With our expertly curated guides, you'll have everything you need to plan the perfect nature getaway. Learn about the flora and fauna of your chosen destination, find the best trails, and prepare for an unforgettable experience in the great outdoors.</p>
+        </div>
+        <div class="col-md-5">
+          <img src="./img_1/istockphoto-656138678-612x612.webp" alt="Description of the image" width="500" height="400" class="img-fluid mx-auto">
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <!-- /END THE FEATURETTES -->
+    </div>
+
+    <!-- cards -->
+
+    <div class="container px-4 py-5" id="custom-cards">
+      <h2 class="pb-2 border-bottom" style="color: white;">Do You Know ??</h2>
+  
+      <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img_1/What-Are-Plants.webp');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+              <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">There are an estimated 390,000 to 400,000 species of plants in the world</h3>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <!-- <img src="" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <!-- <img src="1650306743795.jpeg" alt="Description of the image" width="1em" height="1em"> -->
+
+                  <small>Earth</small>
+                </li>
+                <li class="d-flex align-items-center">
+                  <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                  <small></small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img_1/green-plant-stock-gty-jef-200628_hpMain_16x9_992.jpg');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+              <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">India is home to a rich diversity of plant species, with an estimated 18,000 to 19,000 species of flowering plants</h3>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <!-- <img src="./illustration-image-nature-and-sustainability-eco-friendly-living-and-conservation-concept-art-of-earth-and-animal-life-in-different-environments-generative-ai-illustration-free-photo.jpg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg> -->
+                  <small>India</small>
+                </li>
+                <li class="d-flex align-items-center">
+                  <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg> -->
+                  <small></small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img_1/images.jpeg');">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+              <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">India is one of the most biodiverse countries in the world, with an estimated 90,000 to 100,000 species of animals.</h3>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="me-auto">
+                  <!-- <img src="./illustration-image-nature-and-sustainability-eco-friendly-living-and-conservation-concept-art-of-earth-and-animal-life-in-different-environments-generative-ai-illustration-free-photo.jpg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                </li>
+                <li class="d-flex align-items-center me-3">
+                  <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg> -->
+                  <small>India</small>
+                </li>
+                <li class="d-flex align-items-center">
+                  <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                  <small></small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container py-3">
+      <header>
+        
+    <style>
+      .text-body-emphasis1{
+        color: white;
+      }
+    </style>
+
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+          <h1 class="display-4 fw-normal text-body-emphasis1" >Pricing</h1>
+          <p class="fs-5 text-body-secondary1">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+        </div>
+      </header>
+    
+      <main>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 border-primary text-bg-primary">
+                <h4 class="my-0 fw-normal">1st Prize</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>A sponsored trip to an amazing destination!</li>
+                  <li>Stay </li>
+                  <li>travel expenses</li>
+                  <li>All things are sponsored by us</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 border-primary text-bg-primary">
+                <h4 class="my-0 fw-normal">2nd Prize</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>a custom t-shirt, designed just for you without any promotional logos!</li>
+                  <li>You can customize</li>
+                  <li>Delivery charges are our's</li>
+                  <li>Some more swags is also provided</li>
+                </ul>
+              
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+              <div class="card-header py-3 text-bg-primary border-primary">
+                <h4 class="my-0 fw-normal">3rd prize</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>A selection of plants of your choice, tailored to your preferences!                  </li>
+                  <li>You can select your plants</li>
+                  <li>Maunal guide is provided by us</li>
+                  <li>Delivery charges is provided by us</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        
+        
+      </main>
+    
+     
+    </div>
+
+
+    <!-- footer -->
+    <footer class="py-3 my-4 container">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">About</a></li>
+      </ul>
+      <p class="text-center text-body-secondary1">© 2024 Company, Inc</p>
+    </footer>
+</body>
+</html>

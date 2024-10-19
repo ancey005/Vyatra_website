@@ -1,0 +1,100 @@
+.element_1{
+  display: block;
+}
+.Image{
+  height: 700px;
+  width: 100%;
+}
+body{
+   /* background-color: black; */ 
+  
+    background: linear-gradient(300deg, #00bfff, #360033, #0b8793);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+   
+}
+.featurette{
+  color: white;
+}
+span{
+  color: whitesmoke;
+}
+.marketing{
+  margin-top: 40px;
+}
+p{
+  color: white;
+}
+.text-body-secondary1 {
+  --bs-text-opacity: 1;
+  color: white !important;
+  /* color: var(--bs-secondary-color) !important; */
+}
+.link-secondary1{
+  color: white !important;
+}
+.custom-carousel {
+  height: 50vh; /* 50% of the viewport height */
+}
+
+/* Ensure the images fill the carousel container */
+.custom-carousel .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Adjusts image to cover the container */
+}
+
+.fw-normal1{
+  color: #81d2ed;
+}
+
+.row1 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: calc(-1* var(--bs-gutter-y));
+  margin-right: calc(-.5* var(--bs-gutter-x));
+  margin-left: calc(-.5* var(--bs-gutter-x));
+  margin: 0px 251px 0px -87px;
+}
+
+
+.featurette-divider{
+  margin: 5rem 0;
+  color: inherit;
+  border: 0;
+  border-top: var(--bs-border-width) solid;
+  opacity: .25;
+  color: white;
+  width: 5px;
+}
+
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50px;
+}
+
+.header {
+  background-color: #111010;
+  width: 100%;
+  padding: 14px 17px;
+  background: linear-gradient(300deg, #00bfff, #360033, #0b8793);
+}
+
+.border-bottom1{
+  border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+  background-color: #0c0c0c;
+}
+.link-secondary1{
+  color: white !important;
+}
+.link-body-emphasis1{
+  color: white;
+}
+
+/* hr{
+  color: white;
+} */
