@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VYATRA_Camp</title>
+  <link rel="stylesheet" href="./main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
+  <style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+    }
+    .travelers-section {
+        background-color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .header {
+        background-color: #111010;
+        width: 100%;
+        padding: 14px 17px;
+    }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0px 0px -3px -9px;
+    }
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #fff;
+        font-size: 31px;
+        font-weight: 400;
+    }
+    .logo-circle {
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+    .brand-name {
+        margin: 0;
+    }
+    .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 53px;
+        margin: 0px -295px 0px 0px;
+        position: relative;
+    }
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s ease;
+    }
+    .nav-link:hover,
+    .nav-link:focus {
+        color: #d9d9d9;
+    }
+    .travel-button {
+        border-radius: 50px;
+        background-color: #d9d9d9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 30px;
+        text-decoration: none;
+        color: #000;
+        transition: background-color 0.3s ease;
+        position: relative;
+        cursor: pointer;
+    }
+    .travel-button:hover,
+    .travel-button:focus {
+        background-color: #c0c0c0;
+    }
+    .travel-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #d9d9d9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 400px;
+    }
+    .dropdown-menu.visible {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+    .dropdown-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    .dropdown-row h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .dropdown-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+    }
+    .search-container {
+        border-radius: 50px;
+        background-color: #d9d9d9;
+        display: flex;
+        align-items: center;
+        padding: 6px 16px;
+        position: relative;
+        overflow: hidden;
+        width: 48px;
+        transition: width 0.3s ease;
+    }
+    .search-container.expanded {
+        width: 250px;
+    }
+    .search-input {
+        border: none;
+        background: transparent;
+        padding: 8px;
+        font-size: 16px;
+        outline: none;
+        width: 0;
+        transition: width 0.3s ease;
+    }
+    .search-container.expanded .search-input {
+        width: 200px;
+    }
+    .search-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        position: absolute;
+        right: 16px;
+    }
+    .search-icon {
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .search-container.expanded .search-icon {
+        opacity: 1;
+    }
+    .user-avatar {
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+    .content-grid {
+        display: flex;
+        gap: 20px;
+    }
+    .image-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+    }
+    .image-row {
+        display: flex;
+        gap: 20px;
+    }
+    .image-wrapper {
+        width: calc(50% - 10px);
+    }
+    .gallery-image {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        object-fit: cover;
+    }
+    .sidebar {
+        border-radius: 35px;
+        background-color: #d9d9d9;
+        width: 300px;
+        height: 838px;
+    }
+    .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    /* margin-top: calc(-1* var(--bs-gutter-y)); */
+    /* margin-right: calc(-.5* var(--bs-gutter-x)); */
+    /* margin-left: calc(-.5* var(--bs-gutter-x)); */
+    margin: 76px 0px 0px 7px;
+}
+    @media (max-width: 991px) {
+        .header-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .content-grid {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            height: 300px;
+        }
+    }
+</style>
+
+  <!--<link rel="stylesheet" href="./online_style.css">-->
+
+
+
+
+  <!-- <header class="p-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+  
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 link-secondary1">Overview</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
+        </ul>
+  
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+  
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+    <header class="p-3 border-bottom1" style="background-color: black;">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-luggage-fill me-4" viewBox="0 0 16 16">
+              <path d="M2 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V5h.5A1.5 1.5 0 0 1 8 6.5V7H7v-.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5H4v1H2.5v.25a.75.75 0 0 1-1.5 0v-.335A1.5 1.5 0 0 1 0 13.5v-7A1.5 1.5 0 0 1 1.5 5H2zM3 5h2V2H3z"/>
+              <path d="M2.5 7a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5m10 1v-.5A1.5 1.5 0 0 0 11 6h-1a1.5 1.5 0 0 0-1.5 1.5V8H8v8h5V8zM10 7h1a.5.5 0 0 1 .5.5V8h-2v-.5A.5.5 0 0 1 10 7M5 9.5A1.5 1.5 0 0 1 6.5 8H7v8h-.5A1.5 1.5 0 0 1 5 14.5zm9 6.5V8h.5A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+            </svg>
+          </a>
+    
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="../main_folder/main.html" class="nav-link px-2 link-secondary1" style="color: white;">Home</a></li>
+            <li><a href="./map.html" class="nav-link px-2 link-body-emphasis1" style="color: white;">Travel</a></li>
+            <li><a href="../main_folder/post_file/post.html" class="nav-link px-2 link-body-emphasis1" style="color: white;">Posts</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis1" style="color: white;">Hotels</a></li>
+          </ul>
+    
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+          </form>
+    
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="../main_folder/leader_board.html">Leader Board</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
+  
+  
+  
+  
+  <div id="myCarousel" class="carousel slide mb-6 " data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button>
+    </div>
+    <div class="carousel-inner" >
+      <div class="carousel-item">
+        <img class="Image" src="./img/Screenshot 2024-08-27 233927.png" >
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Find Your Wild.</h1>
+            <p class="opacity-75">Wander Where the Wi-Fi is Weak, and Nature is Strong.</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="Image" src="./img/Rishikesh-rafting.jpg" alt="">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Escape to Nature.</h1>
+            <p>Disconnect to Reconnect—Explore the Great Outdoors.</p>
+           
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item active">
+        <img class="Image" src="./img/wp2013433.jpg" alt="">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg> -->
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>S'more Fun with Every Trip.</h1>
+            <p>S'mores, Stories, and Stargazing—Life is Better Outdoors.</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
+  
+    
+      <!-- <script src="script.js"></script> -->
+       <br><br>
+       <div class="container">
+         <div class="row featurette">
+           <div class="col-md-7">
+             <h2 class="featurette-heading fw-normal lh-1">"Adventure Begins Where the Road Ends—Camp More, Worry Less." <span class="text-body-secondary">It’ll blow your mind.</span></h2>
+             <p class="lead">Building a fire while camping outdoors is a magical experience. It’s not only magical but also highly practical. Gathering firewood, choosing suitable sticks for starting, tinder, and kindling, and understanding fire safety all teach young individuals to appreciate the fundamental elements of fire.</p>
+            </div>
+            <div class="col-md-5">
+              <img src="./img/gettyimages-1424252625-612x612.jpg" alt="Your Image Description" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="400" style="border-radius: 50px;">
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="container px-4 py-5" id="custom-cards">
+          <h2 class="pb-2 border-bottom">Explore</h2>
+      
+          <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+            <div class="col">
+              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img/Kuari-Pass-Trek.png');">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                  <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Breathe in the wild air</h3>
+                  <ul class="d-flex list-unstyled mt-auto">
+                    <li class="me-auto">
+                      <!-- <img src="" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                    </li>
+                    <li class="d-flex align-items-center me-3">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg> -->
+                     
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg> -->
+                      
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+      
+            <div class="col">
+              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img/gettyimages-1424252625-612x612.jpg');">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                  <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Adventure awaits in the great outdoors</h3>
+                  <ul class="d-flex list-unstyled mt-auto">
+                    <li class="me-auto">
+                      <!-- <img src="./illustration-image-nature-and-sustainability-eco-friendly-living-and-conservation-concept-art-of-earth-and-animal-life-in-different-environments-generative-ai-illustration-free-photo.jpg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                    </li>
+                    <li class="d-flex align-items-center me-3">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg> -->
+                      
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg> -->
+                      <
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+      
+            <div class="col">
+              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./img/istockphoto-1142877729-612x612.jpg');>
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                  <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Let the current carry your worries away</h3>
+                  <ul class="d-flex list-unstyled mt-auto">
+                    <li class="me-auto">
+                      <!-- <img src="./illustration-image-nature-and-sustainability-eco-friendly-living-and-conservation-concept-art-of-earth-and-animal-life-in-different-environments-generative-ai-illustration-free-photo.jpg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white"> -->
+                    </li>
+                    <li class="d-flex align-items-center me-3">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg> -->
+                      
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <!-- <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg> -->
+                      
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+        <hr class="featurette-divider">
+      
+        <div class="container">
+          <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+              
+              <h2 class="featurette-heading fw-normal lh-1">Breathe in the Fresh Air, Exhale Your Worries—This is Camping.<span class="text-body-secondary">"Wander, Explore, Discover" – Camp with Us."</span></h2>
+              <p class="lead">Campfires, Starry Skies, and Endless Trails—Embrace the Adventure.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <img src="./img/Camping_in_Summer.webp" alt="Your Image Description" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="400" style="border-radius: 50px;">
+              
+            </div>
+          </div>
+        </div>
+
+<!-- 
+      <div class="colu">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./MainAfter.webp');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">I cant be killed</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="./Water-Sports-in-Goa.jpg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+              </li>
+              <li class="d-flex align-items-center me-3">
+               
+             
+              </li>
+          
+              <li class="d-flex align-items-center">
+               
+              
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="colu">
+    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('./MainAfter.webp');">
+      <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+        <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">I am Immortal</h3>
+        <ul class="d-flex list-unstyled mt-auto">
+          <li class="me-auto">
+            <img src="./photo-1700138341544-37abd07aa14d.jpeg" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+          </li>
+          <li class="d-flex align-items-center me-3">
+            
+      
+          </li>
+          <li class="d-flex align-items-center">
+           
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+
+ <!-- footer -->
+ <footer class="py-3 my-4">
+  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Home</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Features</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">Pricing</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">FAQs</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary1">About</a></li>
+  </ul>
+  <p class="text-center text-body-secondary1">©️ 2024 Company, Inc</p>
+</footer>
+
+
+
+
+  </body>
+  </html>
